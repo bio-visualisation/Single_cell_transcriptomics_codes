@@ -14,10 +14,14 @@ m_ont <- msigdbr(species = "Homo sapiens", category = "C5",
   select(gs_name, gene_symbol)
 head(m_ont)
 
+# Remove the GOMF string from the gs_name column
+m_ont <- m_ont %>%
+  mutate_at("gs_name", str_replace, "GOMF_", "")
+head(m_ont)
+
 # Make an empty list
 plots <- list()
 GSEA <- list()
-
 
 for (df in names(DEG)) {
   data = DEG[[df]]
@@ -46,7 +50,7 @@ for (df in names(DEG)) {
                  hclust_method = "average",  label_format = 30,
                  color = "NES", nWords = 0,
                  hilight = TRUE, hextend = 1, nCluster = 5,
-                 offset = 35)+
+                 offset = 30)+
     scale_color_paletteer_c("grDevices::Reds 3", "NES",direction = -1)+
     ggtitle(df)
   
