@@ -13,7 +13,6 @@ m_ont <- msigdbr(species = "Homo sapiens", category = "C5",
                  subcategory = "GO:MF") %>% 
   select(gs_name, gene_symbol)
 head(m_ont)
-
 # Remove the GOMF string from the gs_name column
 m_ont <- m_ont %>%
   mutate_at("gs_name", str_replace, "GOMF_", "")
@@ -34,17 +33,14 @@ for (df in names(DEG)) {
     dplyr::select(gene, Score)
   # Make the rank file
   ranks <- deframe(gene.list)
-  head(ranks)
   # Set decreasing order
   geneList = sort(ranks, decreasing = TRUE)
   #===============================================================
   # Perform GSEA
   #===============================================================
   em2 <- GSEA(geneList, TERM2GENE = m_ont)
-  head(em2)
-  gsea_result <- em2@result
-  
-  GSEA[[df]] <- gsea_result
+  # Store the GSEA result
+  GSEA[[df]] <- em2
   # Make a Tree Plot
   edox2 <- pairwise_termsim(em2)
   p1 <- treeplot(edox2, showCategory = 10,
