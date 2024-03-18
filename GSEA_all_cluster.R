@@ -24,6 +24,7 @@ plots <- list()
 GSEA <- list()
 
 for (df in names(DEG)) {
+  tryCatch({
   data = DEG[[df]]
   message("Doing analysis for ", df)
   # Gene Set Enrichment Analysis (GSEA)
@@ -57,7 +58,8 @@ for (df in names(DEG)) {
   p1$layers[[7]]$aes_params$size <- 2
   # Store the plots in list
   plots[[df]] <- p1
-  
+  }, 
+  error=function(e){cat("ERROR :",conditionMessage(e), "\n")}) 
 }
 
 saveRDS(plots, file = "Treeplots.rds")
