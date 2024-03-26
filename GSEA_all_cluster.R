@@ -1,6 +1,6 @@
 # Code for GSEA tree plot
 library(clusterProfiler) #clusterProfiler_4.10.0
-library(org.Hs.eg.db) #org.Mm.eg.db_3.18.0
+library(org.Hs.eg.db) #org.Hs.eg.db_3.18.0
 library(enrichplot) #enrichplot_1.22.0
 library(tidyverse) #tidyverse_2.0.0
 library(msigdbr) #msigdbr_7.5.1
